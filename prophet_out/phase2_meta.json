@@ -1,0 +1,21 @@
+{
+  "phase": "phase2",
+  "data_fingerprint": {
+    "path": "/root/Sch_comp_v4/data_copy",
+    "size": 4096,
+    "mtime": 1768809399.0437477
+  },
+  "steps_per_hour": 12,
+  "steps_per_day": 288,
+  "feat_cols": [
+    "day_sin",
+    "day_cos",
+    "week_sin",
+    "week_cos",
+    "year_sin",
+    "year_cos",
+    "lag_24h",
+    "rolling_mean_6h",
+    "mask_missing"
+  ]
+}

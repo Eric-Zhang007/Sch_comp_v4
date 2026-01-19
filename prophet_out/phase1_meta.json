@@ -1,0 +1,18 @@
+{
+  "phase": "phase1",
+  "data_fingerprint": {
+    "path": "/root/Sch_comp_v4/data_copy",
+    "size": 4096,
+    "mtime": 1768809399.0437477
+  },
+  "step": "0 days 00:05:00",
+  "steps_per_hour": 12,
+  "steps_per_day": 288,
+  "prophet_best": {
+    "cps": 0.3,
+    "sps": 50.0,
+    "hps": 20.0
+  },
+  "prophet_seasonality_mode": "additive",
+  "prophet_loaded_from_json": false
+}
