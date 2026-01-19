@@ -383,6 +383,27 @@ def compute_corr_prior(values: np.ndarray, mask_in: np.ndarray, train_mask: np.n
 
     return prior
 
+def compute_tail_quantiles_per_node(
+    values: np.ndarray,         # (T,N) scaled
+    mask_tgt: np.ndarray,       # (T,N) invalid=1
+    train_mask: np.ndarray,     # (T,)
+    q_low: float,
+    q_high: float,
+    min_points: int = 500,
+) -> Tuple[np.ndarray, np.ndarray]:
+    T, N = values.shape
+    ql = np.zeros(N, dtype=np.float32)
+    qh = np.zeros(N, dtype=np.float32)
+
+    for n in range(N):
+        valid = train_mask & (mask_tgt[:, n] == 0)
+        data = values[valid, n]
+        if data.size < min_points:
+            # fallback: 只按 train_mask 取，避免极端情况下崩掉
+            data = values[train_mask, n]
+        ql[n] = float(np.quantile(data, q_low))
+        qh[n] = float(np.quantile(data, q_high))
+    return ql, qh
 
 # -----------------------------
 # Dataset: lazy window extraction, optional return of start index for exporting timestamp
@@ -458,6 +479,44 @@ class MaskedCombinedLoss(nn.Module):
         denom = mask.sum().clamp(min=self.eps)
         return self.alpha * (mse_part.sum() / denom) + (1.0 - self.alpha) * (mae_part.sum() / denom)
 
+class QuantileWeightedMaskedCombinedLoss(nn.Module):
+    def __init__(
+        self,
+        alpha: float,
+        q_low: np.ndarray,     # (N,)
+        q_high: np.ndarray,    # (N,)
+        w_low: float = 4.0,
+        w_high: float = 4.0,
+        eps: float = 1e-6,
+    ):
+        super().__init__()
+        self.alpha = float(alpha)
+        self.w_low = float(w_low)
+        self.w_high = float(w_high)
+        self.eps = float(eps)
+
+        ql = torch.tensor(q_low, dtype=torch.float32).view(1, -1, 1)   # (1,N,1)
+        qh = torch.tensor(q_high, dtype=torch.float32).view(1, -1, 1)  # (1,N,1)
+        self.register_buffer("q_low", ql)
+        self.register_buffer("q_high", qh)
+
+    def forward(self, pred: torch.Tensor, target: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
+        # pred, target, mask: (B, N, H), mask=1 means valid supervision
+        ql = self.q_low.to(target.device)
+        qh = self.q_high.to(target.device)
+
+        w = torch.ones_like(target)
+        w = torch.where(target < ql, w * (1.0 + self.w_low), w)
+        w = torch.where(target > qh, w * (1.0 + self.w_high), w)
+
+        eff = mask * w
+        denom = eff.sum().clamp(min=self.eps)
+
+        diff = pred - target
+        mse_part = (diff ** 2) * eff
+        mae_part = diff.abs() * eff
+
+        return self.alpha * (mse_part.sum() / denom) + (1.0 - self.alpha) * (mae_part.sum() / denom)
 
 # -----------------------------
 # Model with correlation prior initialization
@@ -693,6 +752,7 @@ def train_model(args):
     prior_np = compute_corr_prior(values, mask_in, train_mask, min_points=args.prior_min_points)
     prior_t = torch.from_numpy(prior_np).float()
 
+    
     # Index generation
     if args.split_mode == "deploy":
         idx_train = get_indices_strict(train_mask, args.lookback, args.horizon)
@@ -762,7 +822,23 @@ def train_model(args):
 
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=3)
-    criterion = MaskedCombinedLoss(alpha=args.loss_alpha)
+    q_low_arr, q_high_arr = compute_tail_quantiles_per_node(
+    values=values,
+        mask_tgt=mask_tgt,
+        train_mask=train_mask,
+        q_low=args.tail_q_low,
+        q_high=args.tail_q_high,
+        min_points=500,
+    )
+
+    criterion = QuantileWeightedMaskedCombinedLoss(
+        alpha=args.loss_alpha,
+        q_low=q_low_arr,
+        q_high=q_high_arr,
+        w_low=args.tail_w_low,
+        w_high=args.tail_w_high,
+    )
+
 
     use_grad_scaler = args.amp and (device.type == "cuda")
     scaler = torch.cuda.amp.GradScaler(enabled=use_grad_scaler)
@@ -1101,6 +1177,11 @@ def main():
     parser.add_argument("--loss_alpha", type=float, default=0.5)
     parser.add_argument("--clip_grad", type=float, default=1.0)
     parser.add_argument("--stride", type=int, default=1)
+    parser.add_argument("--tail_q_low", type=float, default=0.1)
+    parser.add_argument("--tail_q_high", type=float, default=0.9)
+    parser.add_argument("--tail_w_low", type=float, default=4.0)
+    parser.add_argument("--tail_w_high", type=float, default=4.0)
+
 
     # Device and perf
     parser.add_argument("--device", type=str, default="auto", choices=["auto", "cpu", "cuda", "xpu"])
