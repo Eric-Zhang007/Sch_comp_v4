@@ -1,0 +1,110 @@
+[
+  {
+    "file": "Commercial_1hour.parquet",
+    "building": "Commercial",
+    "resolution": "1hour",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 581.7795800000018,
+    "median": 586.0094274734724,
+    "iqr": 292.2975
+  },
+  {
+    "file": "Commercial_30min.parquet",
+    "building": "Commercial",
+    "resolution": "30min",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 606.6925299999972,
+    "median": 583.11,
+    "iqr": 292.52
+  },
+  {
+    "file": "Commercial_5min.parquet",
+    "building": "Commercial",
+    "resolution": "5min",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 276.32255000004074,
+    "median": 583.1,
+    "iqr": 293.4902510997762
+  },
+  {
+    "file": "Office_1hour.parquet",
+    "building": "Office",
+    "resolution": "1hour",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 617.1424799999999,
+    "median": 314.52,
+    "iqr": 563.55
+  },
+  {
+    "file": "Office_30min.parquet",
+    "building": "Office",
+    "resolution": "30min",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 580.2203999999998,
+    "median": 311.28,
+    "iqr": 556.9200000000001
+  },
+  {
+    "file": "Office_5min.parquet",
+    "building": "Office",
+    "resolution": "5min",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 318.365120000001,
+    "median": 311.16,
+    "iqr": 560.16
+  },
+  {
+    "file": "Public_1hour.parquet",
+    "building": "Public",
+    "resolution": "1hour",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 358.2592000000004,
+    "median": 241.34990148344662,
+    "iqr": 163.96346787056825
+  },
+  {
+    "file": "Public_30min.parquet",
+    "building": "Public",
+    "resolution": "30min",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 234.00000000000003,
+    "median": 241.6,
+    "iqr": 163.34106780573572
+  },
+  {
+    "file": "Public_5min.parquet",
+    "building": "Public",
+    "resolution": "5min",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 104.9640000000014,
+    "median": 292.0,
+    "iqr": 289.97205010951643
+  },
+  {
+    "file": "Residential_1hour.parquet",
+    "building": "Residential",
+    "resolution": "1hour",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 187.18453999998312,
+    "median": 250.0,
+    "iqr": 127.83000000000001
+  },
+  {
+    "file": "Residential_30min.parquet",
+    "building": "Residential",
+    "resolution": "30min",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 155.8019900000037,
+    "median": 251.29500000000002,
+    "iqr": 127.19
+  },
+  {
+    "file": "Residential_5min.parquet",
+    "building": "Residential",
+    "resolution": "5min",
+    "train_end": "2017-12-31 23:59:59",
+    "ramp_thr": 92.83824000000021,
+    "median": 251.415,
+    "iqr": 127.67000000000002
+  }
+]

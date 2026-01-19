@@ -1,0 +1,145 @@
+{
+  "args": {
+    "root": "data",
+    "out": "ST-GNN_out",
+    "resolution": "5min",
+    "split_mode": "strict",
+    "hidden": 64,
+    "lookback": 288,
+    "horizon": 12,
+    "dropout": 0.2,
+    "top_k": null,
+    "self_loop_w": 0.2,
+    "prior_beta": 0.5,
+    "prior_learnable": false,
+    "prior_min_points": 200,
+    "epochs": 100,
+    "patience": 10,
+    "batch_size": 256,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "loss_alpha": 0.5,
+    "clip_grad": 1.0,
+    "stride": 1,
+    "device": "auto",
+    "amp": false,
+    "amp_dtype": "bf16",
+    "compile": false,
+    "num_workers": 12,
+    "prefetch_factor": 2,
+    "seed": 42,
+    "cpu_threads": 12,
+    "no_tensorboard": false,
+    "tb_logdir": null,
+    "resume_training": false,
+    "ignore_data_mismatch": false
+  },
+  "data_fingerprint": {
+    "root": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data",
+    "files": [
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Commercial_1hour.parquet",
+        "size": 1205763,
+        "mtime": 1768789679.8969402
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Commercial_30min.parquet",
+        "size": 2317781,
+        "mtime": 1768789691.9610543
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Commercial_5min.parquet",
+        "size": 10473338,
+        "mtime": 1768790108.978343
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Office_1hour.parquet",
+        "size": 890471,
+        "mtime": 1768789680.2189715
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Office_30min.parquet",
+        "size": 1642383,
+        "mtime": 1768789692.3953936
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Office_5min.parquet",
+        "size": 8133254,
+        "mtime": 1768790108.3803847
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Public_1hour.parquet",
+        "size": 786313,
+        "mtime": 1768789679.6453135
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Public_30min.parquet",
+        "size": 1523842,
+        "mtime": 1768789692.2524788
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Public_5min.parquet",
+        "size": 8460329,
+        "mtime": 1768790108.1348445
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Residential_1hour.parquet",
+        "size": 878949,
+        "mtime": 1768789679.9284198
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Residential_30min.parquet",
+        "size": 1683617,
+        "mtime": 1768789692.1895912
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\Residential_5min.parquet",
+        "size": 8667814,
+        "mtime": 1768790111.0207272
+      },
+      {
+        "path": "C:\\Users\\zjc01\\Desktop\\Sch_comp_v4\\data\\scaler_params.json",
+        "size": 2831,
+        "mtime": 1768790112.0393562
+      }
+    ]
+  },
+  "stats": {
+    "nodes": [
+      "Commercial_5min",
+      "Office_5min",
+      "Public_5min",
+      "Residential_5min"
+    ],
+    "medians": [
+      583.0999755859375,
+      311.1600036621094,
+      292.0,
+      251.4149932861328
+    ],
+    "iqrs": [
+      293.4902648925781,
+      560.1599731445312,
+      289.9720458984375,
+      127.66999816894531
+    ],
+    "resolution": "5min",
+    "full_index_start": "2016-01-01 00:00:00",
+    "full_index_end": "2018-12-31 23:55:00",
+    "n_steps": 315648
+  },
+  "device": "xpu",
+  "prior": {
+    "type": "corr_train_only",
+    "prior_beta": 0.5,
+    "prior_learnable": false,
+    "prior_min_points": 200
+  },
+  "split": {
+    "train": "< 2018-01-01",
+    "val": "2018-01-01 .. 2018-06-30",
+    "test": "2018-07, 2018-08-01..10, 2018-11-20..30, 2018-12",
+    "split_mode": "strict"
+  },
+  "created_at": "2026-01-19 12:58:46"
+}
