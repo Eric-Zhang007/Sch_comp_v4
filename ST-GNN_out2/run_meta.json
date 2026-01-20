@@ -1,0 +1,150 @@
+{
+  "args": {
+    "root": "data",
+    "out": "ST-GNN_out2",
+    "resolution": "5min",
+    "split_mode": "strict",
+    "hidden": 128,
+    "lookback": 288,
+    "horizon": 12,
+    "dropout": 0.2,
+    "top_k": null,
+    "self_loop_w": 0.2,
+    "prior_beta": 0.5,
+    "prior_learnable": false,
+    "prior_min_points": 200,
+    "epochs": 100,
+    "patience": 20,
+    "batch_size": 512,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "loss_alpha": 0.5,
+    "clip_grad": 1.0,
+    "stride": 1,
+    "tail_q_low": 0.05,
+    "tail_q_high": 0.95,
+    "tail_w_low": 3.0,
+    "tail_w_high": 2.0,
+    "tail_warmup_epochs": 10,
+    "device": "auto",
+    "amp": false,
+    "amp_dtype": "bf16",
+    "compile": false,
+    "num_workers": 12,
+    "prefetch_factor": 2,
+    "seed": 42,
+    "cpu_threads": 206,
+    "no_tensorboard": false,
+    "tb_logdir": null,
+    "resume_training": false,
+    "ignore_data_mismatch": false
+  },
+  "data_fingerprint": {
+    "root": "/root/Sch_comp_v4/data",
+    "files": [
+      {
+        "path": "/root/Sch_comp_v4/data/Commercial_1hour.parquet",
+        "size": 1205763,
+        "mtime": 1768807751.9877255
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Commercial_30min.parquet",
+        "size": 2317781,
+        "mtime": 1768807752.0317245
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Commercial_5min.parquet",
+        "size": 10473338,
+        "mtime": 1768807752.1197224
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Office_1hour.parquet",
+        "size": 890471,
+        "mtime": 1768807752.1277223
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Office_30min.parquet",
+        "size": 1642383,
+        "mtime": 1768807752.1357222
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Office_5min.parquet",
+        "size": 8133254,
+        "mtime": 1768807752.187721
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Public_1hour.parquet",
+        "size": 786313,
+        "mtime": 1768807752.191721
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Public_30min.parquet",
+        "size": 1523842,
+        "mtime": 1768807752.2037206
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Public_5min.parquet",
+        "size": 8460329,
+        "mtime": 1768807752.2517195
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Residential_1hour.parquet",
+        "size": 878949,
+        "mtime": 1768807752.2597194
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Residential_30min.parquet",
+        "size": 1683617,
+        "mtime": 1768807752.2677193
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Residential_5min.parquet",
+        "size": 8667814,
+        "mtime": 1768807752.3197181
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/scaler_params.json",
+        "size": 2831,
+        "mtime": 1768807752.3197181
+      }
+    ]
+  },
+  "stats": {
+    "nodes": [
+      "Commercial_5min",
+      "Office_5min",
+      "Public_5min",
+      "Residential_5min"
+    ],
+    "medians": [
+      583.0999755859375,
+      311.1600036621094,
+      292.0,
+      251.4149932861328
+    ],
+    "iqrs": [
+      293.4902648925781,
+      560.1599731445312,
+      289.9720458984375,
+      127.66999816894531
+    ],
+    "resolution": "5min",
+    "full_index_start": "2016-01-01 00:00:00",
+    "full_index_end": "2018-12-31 23:55:00",
+    "n_steps": 315648
+  },
+  "device": "cuda",
+  "prior": {
+    "type": "corr_train_only",
+    "prior_beta": 0.5,
+    "prior_learnable": false,
+    "prior_min_points": 200
+  },
+  "split": {
+    "train": "< 2018-01-01",
+    "val": "2018-01-01 .. 2018-06-30",
+    "test": "2018-07, 2018-08-01..10, 2018-11-20..30, 2018-12",
+    "split_mode": "strict"
+  },
+  "created_at": "2026-01-19 23:50:30"
+}

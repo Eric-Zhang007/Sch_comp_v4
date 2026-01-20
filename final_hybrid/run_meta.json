@@ -1,0 +1,185 @@
+{
+  "args": {
+    "root": "data",
+    "out": "final_hybrid",
+    "resolution": "5min",
+    "split_mode": "strict",
+    "hidden": 96,
+    "lookback": 288,
+    "horizon": 12,
+    "dropout": 0.1,
+    "top_k": null,
+    "self_loop_w": 1.0,
+    "prior_beta": 0.1,
+    "prior_learnable": true,
+    "prior_min_points": 200,
+    "zero_prior_diag": false,
+    "epochs": 60,
+    "patience": 30,
+    "batch_size": 256,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "loss_alpha": 0.7,
+    "clip_grad": 1.0,
+    "stride": 1,
+    "tail_q_low": 0.1,
+    "tail_q_high": 0.9,
+    "w_low_over": 1.0,
+    "w_low_under": 1.0,
+    "w_high_under": 1.2,
+    "w_high_over": 1.0,
+    "tail_warmup_epochs": 0,
+    "sign_tol": 0.0001,
+    "node_weights": null,
+    "finetune_mode": true,
+    "plateau_factor": 0.5,
+    "plateau_patience": 3,
+    "plateau_threshold": 0.0001,
+    "plateau_min_lr": 1e-06,
+    "onecycle_pct_start": 0.1,
+    "onecycle_div_factor": 10.0,
+    "onecycle_final_div_factor": 100.0,
+    "mape_eps": 0.001,
+    "backup_best_each_improve": false,
+    "device": "auto",
+    "amp": false,
+    "amp_dtype": "bf16",
+    "compile": false,
+    "num_workers": 12,
+    "prefetch_factor": 2,
+    "seed": 42,
+    "cpu_threads": 206,
+    "no_tensorboard": false,
+    "tb_logdir": null,
+    "resume_training": false,
+    "ignore_data_mismatch": false,
+    "init_from_best_path": null
+  },
+  "data_fingerprint": {
+    "root": "/root/Sch_comp_v4/data",
+    "files": [
+      {
+        "path": "/root/Sch_comp_v4/data/Commercial_1hour.parquet",
+        "size": 1205763,
+        "mtime": 1768807751.9877255
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Commercial_30min.parquet",
+        "size": 2317781,
+        "mtime": 1768807752.0317245
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Commercial_5min.parquet",
+        "size": 10473338,
+        "mtime": 1768807752.1197224
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Office_1hour.parquet",
+        "size": 890471,
+        "mtime": 1768807752.1277223
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Office_30min.parquet",
+        "size": 1642383,
+        "mtime": 1768807752.1357222
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Office_5min.parquet",
+        "size": 8133254,
+        "mtime": 1768807752.187721
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Public_1hour.parquet",
+        "size": 786313,
+        "mtime": 1768807752.191721
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Public_30min.parquet",
+        "size": 1523842,
+        "mtime": 1768807752.2037206
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Public_5min.parquet",
+        "size": 8460329,
+        "mtime": 1768807752.2517195
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Residential_1hour.parquet",
+        "size": 878949,
+        "mtime": 1768807752.2597194
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Residential_30min.parquet",
+        "size": 1683617,
+        "mtime": 1768807752.2677193
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/Residential_5min.parquet",
+        "size": 8667814,
+        "mtime": 1768807752.3197181
+      },
+      {
+        "path": "/root/Sch_comp_v4/data/scaler_params.json",
+        "size": 2831,
+        "mtime": 1768807752.3197181
+      }
+    ]
+  },
+  "stats": {
+    "nodes": [
+      "Commercial_5min",
+      "Office_5min",
+      "Public_5min",
+      "Residential_5min"
+    ],
+    "medians": [
+      583.0999755859375,
+      311.1600036621094,
+      292.0,
+      251.4149932861328
+    ],
+    "iqrs": [
+      293.4902648925781,
+      560.1599731445312,
+      289.9720458984375,
+      127.66999816894531
+    ],
+    "resolution": "5min",
+    "full_index_start": "2016-01-01 00:00:00",
+    "full_index_end": "2018-12-31 23:55:00",
+    "n_steps": 315648
+  },
+  "device": "cuda",
+  "prior": {
+    "type": "corr_train_only",
+    "prior_beta": 0.1,
+    "prior_learnable": true,
+    "prior_min_points": 200,
+    "zero_prior_diag": false,
+    "self_loop_w": 1.0
+  },
+  "loss": {
+    "type": "SignedQuantileWeightedMaskedCombinedLoss",
+    "alpha": 0.7,
+    "tail_q_low": 0.1,
+    "tail_q_high": 0.9,
+    "w_low_over": 1.0,
+    "w_low_under": 1.0,
+    "w_high_under": 1.2,
+    "w_high_over": 1.0,
+    "tail_warmup_epochs": 0,
+    "finetune_mode": true,
+    "sign_tol": 0.0001,
+    "node_weights": null
+  },
+  "scheduler": {
+    "type": "plateau"
+  },
+  "split": {
+    "train": "< 2018-01-01",
+    "val": "2018-01-01 .. 2018-06-30",
+    "test": "2018-07, 2018-08-01..10, 2018-11-20..30, 2018-12",
+    "split_mode": "strict"
+  },
+  "created_at": "2026-01-20 19:16:55"
+}

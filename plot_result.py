@@ -29,8 +29,8 @@ def plot_node(df, node_name, out_dir, freq="5min"):
 
     # 1) time series with real time axis and gaps
     plt.figure(figsize=(14, 4))
-    plt.plot(s.index, s["true"], label="True", linewidth=1.2)
-    plt.plot(s.index, s["pred"], label="Pred", linewidth=1.2)
+    plt.plot(s.index, s["true"], label="True", linewidth=1.2, alpha=0.9)
+    plt.plot(s.index, s["pred"], label="Pred", linewidth=1.2, alpha=0.5)
     plt.title(f"{node_name} | Step 1 Prediction")
     plt.xlabel("Time")
     plt.ylabel("Load")
@@ -76,8 +76,8 @@ def plot_node(df, node_name, out_dir, freq="5min"):
     plt.close()
 
 def main():
-    csv_path = "./ST-GNN_out/results_step1.csv"
-    out_dir = "./ST-GNN_out/plots_step1"
+    csv_path = "finetuned/results_step1.csv"
+    out_dir = "finetuned/plots_step1"
 
     os.makedirs(out_dir, exist_ok=True)
     df = pd.read_csv(csv_path)

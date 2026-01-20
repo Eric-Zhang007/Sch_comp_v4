@@ -554,9 +554,17 @@ class TGCNGraphLearner(nn.Module):
             logits = learned + beta * self.prior_logits.to(learned.device)
             logits = F.relu(logits)
 
-            logits = logits + 1e-6 * torch.eye(self.num_nodes, device=logits.device, dtype=logits.dtype)
+            # =======================================================
+            # 【核弹级操作】物理屏蔽对角线
+            # 无论 logits 算出来是多少，强制把对角线变成负无穷
+            # 这样 Softmax 之后，对角线权重 100% 为 0
+            # =======================================================
+            mask = torch.eye(self.num_nodes, dtype=torch.bool, device=logits.device)
+            logits = logits.masked_fill(mask, -1e9)
+            # =======================================================
 
             if self.top_k is not None:
+                # 注意：这里 top_k 可能会选到 -1e9 的值（如果邻居不够多），但没关系
                 k = min(max(int(self.top_k), 1), self.num_nodes)
                 _, idx = torch.topk(logits, k=k, dim=1)
                 keep = torch.zeros_like(logits, dtype=torch.bool)
@@ -564,9 +572,12 @@ class TGCNGraphLearner(nn.Module):
                 logits = logits.masked_fill(~keep, -1e9)
 
             adj = F.softmax(logits, dim=1)
+            
+            # 确保这里没有 self_loop_w 的干扰
             if self.self_loop_w > 0:
-                adj = adj + self.self_loop_w * torch.eye(self.num_nodes, device=adj.device, dtype=adj.dtype)
-                adj = adj / adj.sum(dim=1, keepdim=True)
+                 adj = adj + self.self_loop_w * torch.eye(self.num_nodes, device=adj.device, dtype=adj.dtype)
+                 adj = adj / adj.sum(dim=1, keepdim=True)
+            
             return adj
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
